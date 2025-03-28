@@ -14,7 +14,7 @@ class Product:
     def get_product_info(self):
         return f"Product - {self.item_name}, costs {self.total_price} euro for {self.quantity} units"
 
-#product1  = Product("Laptop", 1200, 1)
-#print(product1.get_product_info())
-#product1.update_quantity(7)
-#print(product1.get_product_info())
+product1  = Product("Laptop", 1200, 1)
+print(product1.get_product_info())
+product1.update_quantity(7)
+print(product1.get_product_info())

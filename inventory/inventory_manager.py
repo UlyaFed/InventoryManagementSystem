@@ -1,5 +1,6 @@
 from product import Product
 
+
 class InventoryManager:
         def __init__(self):
             self.inventory = {}
@@ -13,5 +14,6 @@ class InventoryManager:
         
 manager = InventoryManager()
 manager.add_product("Laptop", 1200, 1)
-manager.add_product("Laptop", 1200, 3)
+manager.add_product("Laptop", 3600, 3)
 print(manager.inventory["Laptop"].get_product_info())  
+
