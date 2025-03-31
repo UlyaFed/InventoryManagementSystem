@@ -1,3 +1,5 @@
+import json
+
 # import sys
 # import os
 
@@ -8,6 +10,10 @@
 # from main import inventory
 
 inventory = {"Laptop":{"product_name":"Laptop", "unit_price": 1000, "product_qty": 1 }}
+
+inventory_json = json.dumps(inventory)
+print(inventory_json)
+
 
 print(inventory)
 
