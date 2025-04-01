@@ -1,21 +1,24 @@
 import json
 
-# import sys
-# import os
+# Load inventory from the JSON file
+def load_inventory():
+    try:
+        with open("inventory.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print("Inventory file not found, initializing new inventory.")
+        return {}  # Return an empty dictionary if the file doesn't exist
 
-# # get absolute folderpath from folder above 
-# folder_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "/home/dci-student/Dokumente/DCI/Python/excercises/projects/InventoryManagementSystem/"))
-# sys.path.append(folder_path)
+# Save inventory to the JSON file
+def save_inventory(inventory):
+    with open("inventory.json", "w") as f:
+        json.dump(inventory, f, indent=4)
 
-# from main import inventory
-
-inventory = {"Laptop":{"product_name":"Laptop", "unit_price": 1000, "product_qty": 1 }}
-
-inventory_json = json.dumps(inventory)
-print(inventory_json)
-
-
-print(inventory)
+# Initial inventory setup - if the file doesn't exist yet, one will be created
+inventory = load_inventory()
+if not inventory:
+    inventory = {"Laptop": {"product_name": "Laptop", "unit_price": 1000, "product_qty": 1}}
+    save_inventory(inventory)  # Save initial inventory to JSON
 
 class Manager:
     manager_1 = "Alex"
@@ -46,20 +49,22 @@ class InventoryManager(Manager, UserRights):
                 print("You are authorized to maintain the inventory")
                 self.m_name = name
                 self.user_rights = rights
+                return True
             elif rights == UserRights.test_access:       
                 print("You are authorized to test the inventory")
                 self.m_name = name
                 self.user_rights = rights
+                return True
             elif rights == UserRights.read_access:       
                 print("You are authorized to read the inventory")
                 self.m_name = name
                 self.user_rights = rights
+                return True
             else: 
                 print("Authorization failed, you are missing rights")
         else:
             print("Authorization failed, invalid username or rights")
-        
-        return 
+            return False
     
     
     def add_products(self):
@@ -76,6 +81,7 @@ class InventoryManager(Manager, UserRights):
             product_qty = int(input("Product quantity: "))
             self.product.update({"product_name": product_name, "unit_price": unit_price, "product_qty": product_qty})
             inventory.update({product_name : self.product})
+            save_inventory(inventory)  # Save the updated inventory to the JSON file
             print(inventory)
         else: 
             print(f"The product {product_name} already exists, choose another product to add.")
@@ -94,6 +100,7 @@ class InventoryManager(Manager, UserRights):
             if confirmation == 'Y':  # Double check, if products should be deleted from inventory
                 removed_item  = inventory.pop(product_to_remove) # deletes the inventory item with name "product_to_remove"                
                 self.__class__.removed_products.append(removed_item) # fill a class list with removed products
+                save_inventory(inventory)  # Save the updated inventory to the JSON file
                 print(f"{product_to_remove} has been removed from the inventory.")
                 print(f"List of removed items: {self.__class__.removed_products}")
             else: 
@@ -115,8 +122,9 @@ class InventoryManager(Manager, UserRights):
         if check_product_in_inventory != None:
             for product, product_details in inventory.items():
                 if product == product_name:
-                    x = product_details.get("product_qty") + qty_to_change
-                    product_details["product_qty"] = x
+                    new_qty = product_details.get("product_qty") + qty_to_change
+                    product_details["product_qty"] = new_qty
+            save_inventory(inventory)  # Save the updated inventory to the JSON file
         else:
             print("The product is not in the inventory.")       
  
@@ -130,7 +138,7 @@ class InventoryManager(Manager, UserRights):
         total_inventory_value = 0 # initializing the variable
         # looping over inventory products to sum the total price (unit_price * product_qty)
         total_inventory_value = sum([product["unit_price"] * product["product_qty"] for product in inventory.values()])
-        print(f"The total inventory value is {total_inventory_value:,.2f} EUR.")
+        print(f"The total inventory value is {total_inventory_value:,.2f} EUR\n")
 
         
 if __name__ == "__main__":

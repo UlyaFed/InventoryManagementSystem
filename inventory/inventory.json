@@ -1,0 +1,17 @@
+{
+    "Laptop": {
+        "product_name": "Laptop",
+        "unit_price": 1000,
+        "product_qty": 1
+    },
+    "Keyboard": {
+        "product_name": "Keyboard",
+        "unit_price": 19.99,
+        "product_qty": 6
+    },
+    "Mouse": {
+        "product_name": "Mouse",
+        "unit_price": 4.99,
+        "product_qty": 18
+    }
+}
