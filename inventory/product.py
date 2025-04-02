@@ -1,6 +1,6 @@
 class Product:
     
-    def __init__(self, item_name, price_per_unit, quantity):
+    def __init__(self, item_name, price_per_unit:float, quantity:int):
         self.item_name = item_name
         self.price_per_unit = price_per_unit
         self.quantity = quantity
