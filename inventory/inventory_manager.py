@@ -1,151 +1,59 @@
-import json
+from product import Product
 
-# Load inventory from the JSON file
-def load_inventory():
-    try:
-        with open("inventory.json", "r") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        print("Inventory file not found, initializing new inventory.")
-        return {}  # Return an empty dictionary if the file doesn't exist
-
-# Save inventory to the JSON file
-def save_inventory(inventory):
-    with open("inventory.json", "w") as f:
-        json.dump(inventory, f, indent=4)
-
-# Initial inventory setup - if the file doesn't exist yet, one will be created
-inventory = load_inventory()
-if not inventory:
-    inventory = {"Laptop": {"product_name": "Laptop", "unit_price": 1000, "product_qty": 1}}
-    save_inventory(inventory)  # Save initial inventory to JSON
-
-class Manager:
-    manager_1 = "Alex"
-    manager_2 = "Britta"
-    manager_3 = "Uliana"
+class InventoryManager():
     
-class UserRights:
-    full_access = "admin"
-    test_access = "tester"
-    read_access = "user"
-
-class InventoryManager(Manager, UserRights):
-    global inventory
-    removed_products = [] # empty list to track removed products from inventory
+    def __init__(self, ):
+        self.inventory = {}
     
-    def __init__(self, m_name, user_rights:str):
-        self.m_name = m_name
-        self.user_rights = user_rights
-        self.product = {"product_name":"Laptop", "unit_price": 1000, "product_qty": 1 }
+    def add_products(self, product):
         
-    def authorize_manager(self):
-        name = input("Enter your username: ").strip().title()
-        rights = input("Enter your user-rights: ").strip().lower()
-
-        # check if name is in Manager_names and if rights are in UserRights
-        if name in [Manager.manager_1, Manager.manager_2, Manager.manager_3] and rights in [UserRights.full_access, UserRights.test_access, UserRights.read_access]:
-            if rights == UserRights.full_access:
-                print("You are authorized to maintain the inventory")
-                self.m_name = name
-                self.user_rights = rights
-                return True
-            elif rights == UserRights.test_access:       
-                print("You are authorized to test the inventory")
-                self.m_name = name
-                self.user_rights = rights
-                return True
-            elif rights == UserRights.read_access:       
-                print("You are authorized to read the inventory")
-                self.m_name = name
-                self.user_rights = rights
-                return True
-            else: 
-                print("Authorization failed, you are missing rights")
+        if product.item_name in self.inventory:
+            print(f"Product {product.item_name} already exists in the inventory. Updating quantity.")
+            self.inventory[product.item_name].update_quantity(product.quantity)
         else:
-            print("Authorization failed, invalid username or rights")
-            return False
-    
-    
-    def add_products(self):
-        print("\n##############################")
-        print(f" ADD PRODUCT ")
-        print("##############################\n")
-        
-        product_name = input("\nEnter the new product_name to add: ").strip().title()
-        check_product_in_inventory = inventory.get(product_name, None)
-        
-        if check_product_in_inventory == None:
-            print("Your product is new. Enter further product details.")
-            unit_price = float(input("Unit_price: "))
-            product_qty = int(input("Product quantity: "))
-            self.product.update({"product_name": product_name, "unit_price": unit_price, "product_qty": product_qty})
-            inventory.update({product_name : self.product})
-            save_inventory(inventory)  # Save the updated inventory to the JSON file
-            print(inventory)
-        else: 
-            print(f"The product {product_name} already exists, choose another product to add.")
-
-      
-    def remove_products(self):
-        
-        print("\n##############################")
-        print(f" REMOVE PRODUCT ")
-        print("##############################\n")
-        
-        product_to_remove = input("Enter product name to remove: ").strip().title()
-        
-        if inventory.get(product_to_remove): # checks if product to remove is in inventory
-            confirmation = input(f"Confirm with 'Y' to remove the product {product_to_remove}: ").strip().upper()
-            if confirmation == 'Y':  # Double check, if products should be deleted from inventory
-                removed_item  = inventory.pop(product_to_remove) # deletes the inventory item with name "product_to_remove"                
-                self.__class__.removed_products.append(removed_item) # fill a class list with removed products
-                save_inventory(inventory)  # Save the updated inventory to the JSON file
-                print(f"{product_to_remove} has been removed from the inventory.")
-                print(f"List of removed items: {self.__class__.removed_products}")
-            else: 
-                return f"No item in the inventory will be deleted."   
+            self.inventory[product.item_name] = product
+            print(f"Product {product.item_name} added to the inventory.")
+              
+    def remove_products(self, item_name):
+        if item_name in self.inventory:
+            self.inventory.pop(item_name)
+            print(f"Product {item_name} removed from the inventory.")
         else:
-            print(f"{product_to_remove} is not in the inventory.")
+            print(f"Product {item_name} not found in the inventory.")
         
-        
-    def update_quantity(self):
-        
-        print("\n##############################")
-        print(f" CHANGE PRODUCT QTY ")
-        print("##############################\n")
-          
-        product_name = input("Enter the product to change: ").strip().title()
-        qty_to_change = int(input("Enter a positive or negative value for change in quantity: "))
-        check_product_in_inventory = inventory.get(product_name, None)
-        
-        if check_product_in_inventory != None:
-            for product, product_details in inventory.items():
-                if product == product_name:
-                    new_qty = product_details.get("product_qty") + qty_to_change
-                    product_details["product_qty"] = new_qty
-            save_inventory(inventory)  # Save the updated inventory to the JSON file
+    def update_quantity(self,item_name, qty_to_change):
+        if item_name in self.inventory:
+            product = self.inventory[item_name]
+            product.update_quantity(qty_to_change)
+            print(f"Quantity of {item_name} updated to {product.quantity}.")
         else:
-            print("The product is not in the inventory.")       
- 
+            print(f"Product {item_name} not found in the inventory.")
+        
     
     def get_total_inventory_value(self):
-        
-        print("\n##############################")
-        print(f" INVENTORY TOTAL VALUE ")
-        print("##############################\n")
-        
-        total_inventory_value = 0 # initializing the variable
-        # looping over inventory products to sum the total price (unit_price * product_qty)
-        total_inventory_value = sum([product["unit_price"] * product["product_qty"] for product in inventory.values()])
-        print(f"The total inventory value is {total_inventory_value:,.2f} EUR\n")
+        total_value = sum(product.total_price() for product in self.inventory.values())
+        print(f"The total inventory value is {total_value:,.2f} EUR\n")
 
+    def get_inventory_info(self):
+        if not self.inventory:
+            print("Inventory is empty.")
+            return
+        for product in self.inventory.values():
+            print(product.get_product_info())
         
 if __name__ == "__main__":
-    InvM1 = InventoryManager("Britta", "admin")
-    InvM1.authorize_manager()
-    InvM1.add_products()
-    InvM1.remove_products()
-    InvM1.update_quantity()
-    InvM1.get_total_inventory_value()
-    print(f"Inventory status: {inventory}")
+    
+
+    manager = InventoryManager()
+    product1 = Product("Laptop", 1200, 1)
+    product2= Product("Mouse", 25, 5)
+    product3 = Product("Keyboard", 19.99, 3)
+    manager.add_products(product1)
+    manager.add_products(product2)
+    manager.add_products(product3)
+    manager.update_quantity("Mouse", 10)
+    manager.get_inventory_info()
+    manager.remove_products("Mouse")
+    manager.get_total_inventory_value()
+    
+    

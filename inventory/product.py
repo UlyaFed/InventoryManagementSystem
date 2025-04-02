@@ -5,13 +5,19 @@ class Product:
         self.price_per_unit = price_per_unit
         self.quantity = quantity
         
-    def update_quantity(self, additional_quantity):
-        self.quantity += additional_quantity
-        self.total_price = self.price_per_unit * self.quantity
-
+    def update_quantity(self, new_quantity):
+        self.quantity += new_quantity
+        
     def total_price(self):
         return self.price_per_unit * self.quantity
-
+    
     def get_product_info(self):
-        return f"Product - {self.item_name}, costs {self.total_price} euro for {self.quantity} units"
-
+        return {
+            "item_name": self.item_name,
+            "price_per_unit": self.price_per_unit,
+            "quantity": self.quantity,
+            "total_price": self.total_price()
+        }
+        
+    def __str__(self):
+        return f"Product - {self.item_name}, costs {self.total_price()} euro for {self.quantity} units"
