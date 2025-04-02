@@ -1,24 +1,25 @@
 from product import Product
 from inventory_manager import InventoryManager
 
-def greeting():
-    print( )
-    print("*"*50)
-    print(" Welcome to Inventory Manager tool")
-    print("*"*50)
-    print( )
-    print( )
-    print( )
+print( )
+print("*"*50)
+print(" Welcome to Inventory Manager tool")
+print("*"*50)
+print( )
+print( )
 
-    
+def options_menu():
+   
+    print("*"*50)
+    print( )
     print("You have the following options\n")
-    print("1: Overview of inventory") 
-    print("2: Add a product to the inventory")
-    print("3: Remove an product from inventory")
-    print("4: Change quantity of a product ") 
-    print("5: View total value of inventory")
-    print("6: Inventory Manager report")
-    print("7: Exit 'Inventory Manager' program") 
+    print("1. Add a product to the inventory")
+    print("2. Remove an product from inventory")
+    print("3. Change quantity of a product ") 
+    print("4. Overview of inventory") 
+    print("5. View total value of inventory")
+    print("6. Inventory Manager report")
+    print("7. Exit 'Inventory Manager' program") 
     print( )
     print("*"*50)
 
@@ -32,17 +33,16 @@ def main():
   
 
     while True: 
-        greeting()
+        options_menu()
 
         print("Choose an option: ")
         option = input("Enter your option: ")
         
         #CLS
         
-        if option == "1":
-            manager.get_inventory_info()
+        
             
-        elif option == "2": 
+        if option == "1": 
             print("\nAdd a product to the inventory\n")
             item_name = input("Enter the product name: ")
             product_price = float(input("Enter the product price per unit: "))
@@ -55,12 +55,21 @@ def main():
             manager.add_products(product)
             print(product.get_product_info())
             
-        elif option == "3":
+        elif option == "2":
             print("\nRemove a product from inventory\n")
             product_to_remove = input("Enter the product to remove: ")
             manager.remove_products(product_to_remove) # 
             
+        elif option == "3": 
+            item_name = input("Enter the product name: ")
+            qty_to_change = int(input("Enter the new quantity: "))
+            manager.update_quantity(item_name, qty_to_change)
             
+        elif option == "4":
+            manager.get_inventory_info()
+            
+        elif option == "5":
+            manager.get_total_inventory_value()
             
         elif option == "6":
             print("here are the recent changes in this session") 
@@ -74,8 +83,8 @@ def main():
 
         else:
             print("Invalid choice, try again")
-            # elif option == "4":    
-            # elif option == "5":   
+               
+               
             # elif option == "6":   
             # elif option == "7":
         
