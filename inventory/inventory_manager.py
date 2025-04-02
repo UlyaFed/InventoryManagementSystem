@@ -9,7 +9,7 @@ class InventoryManager():
         
         if product.item_name in self.inventory:
             print(f"Product {product.item_name} already exists in the inventory. Updating quantity.")
-            self.inventory[product.item_name].update_quantity(product.quantity)
+            self.inventory[product.item_name].update_quantity1(product.quantity) # is it adding the new quantity
         else:
             self.inventory[product.item_name] = product
             print(f"Product {product.item_name} added to the inventory.")
@@ -21,10 +21,10 @@ class InventoryManager():
         else:
             print(f"Product {item_name} not found in the inventory.")
         
-    def update_quantity(self,item_name, qty_to_change):
+    def update_quantity(self,item_name, qty_to_change): 
         if item_name in self.inventory:
             product = self.inventory[item_name]
-            product.update_quantity(qty_to_change)
+            product.update_quantity1(qty_to_change)
             print(f"Quantity of {item_name} updated to {product.quantity}.")
         else:
             print(f"Product {item_name} not found in the inventory.")

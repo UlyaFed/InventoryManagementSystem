@@ -5,7 +5,7 @@ class Product:
         self.price_per_unit = price_per_unit
         self.quantity = quantity
         
-    def update_quantity(self, new_quantity):
+    def update_quantity1(self, new_quantity):
         self.quantity += new_quantity
         
     def total_price(self):
