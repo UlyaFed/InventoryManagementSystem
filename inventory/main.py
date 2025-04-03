@@ -71,21 +71,26 @@ def main():
         elif option == "5":
             manager.get_total_inventory_value()
             
+
         elif option == "6":
-            print("here are the recent changes in this session") 
-      
-            for product in manager.get_recent_changes():
-                print(f"Product: {product["name"]}, New Quantity: {product["quantity"]}")
-     
+            print("\nInventory Manager Report\n")
+            print("----------------------------")
+            total_items = len(manager.inventory)
+            deleted_items = 0 # gelöschte Artikel weren nicht mehr aufgelistet
+            total_value = sum(product.total_price() for product in manager.inventory.values())
+            print(f"Total items in inventory: {total_items}")
+            print(f"Total deleted items: {deleted_items}")
+            print(f"Total inventory value: {total_value:.2f} EUR")
+            print("----------------------------") 
+            
         elif option == "7":
             print("see ya!")
             break
-
         else:
             print("Invalid choice, try again")
                
-               
-            # elif option == "6":   
+        
+              
             # elif option == "7":
         
 
