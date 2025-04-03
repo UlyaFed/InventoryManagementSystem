@@ -9,7 +9,7 @@ class Product:
         self.quantity += new_quantity
         
     def total_price(self):
-        return self.price_per_unit * self.quantity
+        return (self.price_per_unit or 0) * (self.quantity or 0) # 0 is used to avoid NoneType errors
 
     def get_product_info(self):
         return {

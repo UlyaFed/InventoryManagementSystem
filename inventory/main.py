@@ -48,12 +48,15 @@ def main():
             product_price = float(input("Enter the product price per unit: "))
             product_quantity = int(input("Enter the product quantity: "))
             
-            product.item_name = item_name # change class attribute
-            product.price_per_unit = product_price # change class attribute 
-            product.quantity = product_quantity # change class attribute
-            
-            manager.add_products(product)
-            print(product.get_product_info())
+            #we are creating a new product object, not overwriting it like was before.
+            new_product = Product(item_name, product_price, product_quantity)
+            manager.add_products(new_product)
+            print(new_product.get_product_info())
+            #product.item_name = item_name # change class attribute
+            #product.price_per_unit = product_price # change class attribute 
+            #product.quantity = product_quantity # change class attribute
+            #manager.add_products(product)
+            #print(product.get_product_info())
             
         elif option == "2":
             print("\nRemove a product from inventory\n")
@@ -62,8 +65,8 @@ def main():
             
         elif option == "3": 
             item_name = input("Enter the product name: ")
-            qty_to_change = int(input("Enter the new quantity: "))
-            manager.update_quantity(item_name, qty_to_change)
+            qty_to_change = int(input("Enter the quantity to change (use negative for reduction): ")) # for an easier understanding of how to reduce the quantity
+            manager.update_inventory_quantity(item_name, qty_to_change)
             
         elif option == "4":
             manager.get_inventory_info()
@@ -76,10 +79,10 @@ def main():
             print("\nInventory Manager Report\n")
             print("----------------------------")
             total_items = len(manager.inventory)
-            deleted_items = 0 # gelöschte Artikel weren nicht mehr aufgelistet
+            #deleted_items = 0 # gelöschte Artikel weren nicht mehr aufgelistet
             total_value = sum(product.total_price() for product in manager.inventory.values())
             print(f"Total items in inventory: {total_items}")
-            print(f"Total deleted items: {deleted_items}")
+            print(f"Total deleted items: {manager.deleted_items}") # using the deleted items counter from the inventory manager 
             print(f"Total inventory value: {total_value:.2f} EUR")
             print("----------------------------") 
             
@@ -91,7 +94,7 @@ def main():
                
         
               
-            # elif option == "7":
+            
         
 
             
