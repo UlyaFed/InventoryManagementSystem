@@ -1,5 +1,6 @@
 from product import Product
 from inventory_manager import InventoryManager
+from inventory_dict import load_inventory, save_inventory, display_inventory # Britta change
 
 print( )
 print("*"*50)
@@ -51,37 +52,39 @@ def main():
             product.item_name = item_name # change class attribute
             product.price_per_unit = product_price # change class attribute 
             product.quantity = product_quantity # change class attribute
+            product = product.get_product_info() # Britta change
+            manager.add_products(product) # Britta change
+            #print(product.get_product_info())
+            #print("\nUpdated inventory:\n")  # Britta change
+            display_inventory() # Britta change
             
-            manager.add_products(product)
-            print(product.get_product_info())
+        # elif option == "2":
+        #     print("\nRemove a product from inventory\n")
+        #     product_to_remove = input("Enter the product to remove: ")
+        #     manager.remove_products(product_to_remove) # 
             
-        elif option == "2":
-            print("\nRemove a product from inventory\n")
-            product_to_remove = input("Enter the product to remove: ")
-            manager.remove_products(product_to_remove) # 
+        # elif option == "3": 
+        #     item_name = input("Enter the product name: ")
+        #     qty_to_change = int(input("Enter the new quantity: "))
+        #     manager.update_quantity(item_name, qty_to_change)
             
-        elif option == "3": 
-            item_name = input("Enter the product name: ")
-            qty_to_change = int(input("Enter the new quantity: "))
-            manager.update_quantity(item_name, qty_to_change)
+        # elif option == "4":
+        #     manager.get_inventory_info()
             
-        elif option == "4":
-            manager.get_inventory_info()
-            
-        elif option == "5":
-            manager.get_total_inventory_value()
+        # elif option == "5":
+        #     manager.get_total_inventory_value()
             
 
-        elif option == "6":
-            print("\nInventory Manager Report\n")
-            print("----------------------------")
-            total_items = len(manager.inventory)
-            deleted_items = 0 # gelöschte Artikel weren nicht mehr aufgelistet
-            total_value = sum(product.total_price() for product in manager.inventory.values())
-            print(f"Total items in inventory: {total_items}")
-            print(f"Total deleted items: {deleted_items}")
-            print(f"Total inventory value: {total_value:.2f} EUR")
-            print("----------------------------") 
+        # elif option == "6":
+        #     print("\nInventory Manager Report\n")
+        #     print("----------------------------")
+        #     total_items = len(manager.inventory)
+        #     deleted_items = 0 # gelöschte Artikel weren nicht mehr aufgelistet
+        #     total_value = sum(product.total_price() for product in manager.inventory.values())
+        #     print(f"Total items in inventory: {total_items}")
+        #     print(f"Total deleted items: {deleted_items}")
+        #     print(f"Total inventory value: {total_value:.2f} EUR")
+        #     print("----------------------------") 
             
         elif option == "7":
             print("see ya!")
