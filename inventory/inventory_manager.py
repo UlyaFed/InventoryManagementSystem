@@ -40,6 +40,6 @@ class InventoryManager():
             return
         for product in self.inventory.values():
             print(product.get_product_info())
-        
+           
 
     
