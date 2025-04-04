@@ -1,0 +1,32 @@
+{
+    "Laptop": {
+        "item_name": "Laptop",
+        "price_per_unit": 1000,
+        "quantity": 1,
+        "total_price": 1000
+    },
+    "PC-table": {
+        "item_name": "PC-table",
+        "price_per_unit": 499.0,
+        "quantity": 6,
+        "total_price": 2994.0
+    },
+    "Display": {
+        "item_name": "Display",
+        "price_per_unit": 250.5,
+        "quantity": 20,
+        "total_price": 5010.0
+    },
+    "Joystick": {
+        "item_name": "Joystick",
+        "price_per_unit": 79.5,
+        "quantity": 200,
+        "total_price": 15900.0
+    },
+    "USB-stick": {
+        "item_name": "USB-stick",
+        "price_per_unit": 3.95,
+        "quantity": 150,
+        "total_price": 592.5
+    }
+}

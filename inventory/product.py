@@ -5,12 +5,14 @@ class Product:
         self.price_per_unit = price_per_unit
         self.quantity = quantity
         
+        
     def update_quantity(self, new_quantity):
-        self.quantity += new_quantity
+        self.quantity += new_quantity 
         
     def total_price(self):
         return (self.price_per_unit or 0) * (self.quantity or 0) # 0 is used to avoid NoneType errors
 
+    
     def get_product_info(self):
         return {
             "item_name": self.item_name,
@@ -21,3 +23,4 @@ class Product:
         
     def __str__(self):
         return f"Product - {self.item_name}, costs {self.total_price()} euro for {self.quantity} units"
+
