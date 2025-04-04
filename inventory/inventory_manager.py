@@ -5,7 +5,7 @@ class InventoryManager():
     removed_products = []  # Empty list to track removed products from inventory
     
     def __init__(self, ):
-        self.inventory = {} 
+        #self.inventory = {} 
         self.deleted_items = 0 # created for counting deleted items
     
     
