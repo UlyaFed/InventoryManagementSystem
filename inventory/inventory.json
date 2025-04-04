@@ -1,7 +1,32 @@
 {
-    "chair": {
-        "item_name": "chair",
-        "price_per_unit": 49.99,
-        "quantity": 5
+    "Laptop": {
+        "item_name": "Laptop",
+        "price_per_unit": 1000,
+        "quantity": 1,
+        "total_price": 1000
+    },
+    "PC-table": {
+        "item_name": "PC-table",
+        "price_per_unit": 499.0,
+        "quantity": 6,
+        "total_price": 2994.0
+    },
+    "Display": {
+        "item_name": "Display",
+        "price_per_unit": 250.5,
+        "quantity": 20,
+        "total_price": 5010.0
+    },
+    "Joystick": {
+        "item_name": "Joystick",
+        "price_per_unit": 79.5,
+        "quantity": 200,
+        "total_price": 15900.0
+    },
+    "Headset": {
+        "item_name": "Headset",
+        "price_per_unit": 45.66,
+        "quantity": 8,
+        "total_price": 365.28
     }
 }

@@ -1,6 +1,6 @@
 from product import Product
 from inventory_manager import InventoryManager
-from inventory_dict import load_inventory, save_inventory, display_inventory # Britta change
+from inventory_dict import load_inventory, save_inventory, display_inventory 
 
 print( )
 print("*"*50)
@@ -9,18 +9,21 @@ print("*"*50)
 print( )
 print( )
 
+
+
 def options_menu():
    
     print("*"*50)
     print( )
     print("You have the following options\n")
-    print("1. Add a product to the inventory")
-    print("2. Remove an product from inventory")
-    print("3. Change quantity of a product ") 
-    print("4. Overview of inventory") 
-    print("5. View total value of inventory")
-    print("6. Inventory Manager report")
-    print("7. Exit 'Inventory Manager' program") 
+    print("1. Get product info from inventory") #Britta
+    print("2. Add a product to the inventory")
+    print("3. Remove an product from inventory")
+    print("4. Change quantity of a product ") 
+    print("5. Overview of inventory") 
+    print("6. View total value of inventory")
+    print("7. Inventory Manager report")
+    print("8. Exit 'Inventory Manager' program") 
     print( )
     print("*"*50)
 
@@ -39,72 +42,69 @@ def main():
         print("Choose an option: ")
         option = input("Enter your option: ")
         
-        #CLS
         
+        if option == "1":
+            item_name = input("Enter the product name for inventory info: ")
+            manager.product_in_inventory(item_name)
         
             
-        if option == "1": 
+        if option == "2": 
             print("\nAdd a product to the inventory\n")
             item_name = input("Enter the product name: ")
             product_price = float(input("Enter the product price per unit: "))
             product_quantity = int(input("Enter the product quantity: "))
+            #we are creating a new product object, not overwriting it like was before.
+            new_product = Product(item_name, product_price, product_quantity)
+            product = new_product.get_product_info() # Britta
+            manager.add_products(product) #Britta
+
             
-            product.item_name = item_name # change class attribute
-            product.price_per_unit = product_price # change class attribute 
-            product.quantity = product_quantity # change class attribute
-            product = product.get_product_info() # Britta change
-            manager.add_products(product) # Britta change
-            #print(product.get_product_info())
-            #print("\nUpdated inventory:\n")  # Britta change
-            display_inventory() # Britta change
+        elif option == "3":
+            print("\nRemove a product from inventory\n")
+            product_to_remove = input("Enter the product to remove: ")
+            manager.remove_products(product_to_remove) 
+            print("\nList of {self.deleted_items} removed items:")  # Britta how we get the attribute?
+            print(manager.removed_products) 
             
-        # elif option == "2":
-        #     print("\nRemove a product from inventory\n")
-        #     product_to_remove = input("Enter the product to remove: ")
-        #     manager.remove_products(product_to_remove) # 
             
-        # elif option == "3": 
-        #     item_name = input("Enter the product name: ")
-        #     qty_to_change = int(input("Enter the new quantity: "))
-        #     manager.update_quantity(item_name, qty_to_change)
+        elif option == "4": 
+            item_name = input("Enter the product name: ")
+            qty_to_change = int(input("Enter the quantity to change (use negative for reduction): ")) # for an easier understanding of how to reduce the quantity
+            manager.update_inventory_quantity(item_name, qty_to_change)
             
-        # elif option == "4":
-        #     manager.get_inventory_info()
             
-        # elif option == "5":
-        #     manager.get_total_inventory_value()
+        elif option == "5":
+            manager.get_inventory_info()
+            
+            
+        elif option == "6":
+            manager.get_total_inventory_value()
             
 
-        # elif option == "6":
-        #     print("\nInventory Manager Report\n")
-        #     print("----------------------------")
-        #     total_items = len(manager.inventory)
-        #     deleted_items = 0 # gelöschte Artikel weren nicht mehr aufgelistet
-        #     total_value = sum(product.total_price() for product in manager.inventory.values())
-        #     print(f"Total items in inventory: {total_items}")
-        #     print(f"Total deleted items: {deleted_items}")
-        #     print(f"Total inventory value: {total_value:.2f} EUR")
-        #     print("----------------------------") 
-            
         elif option == "7":
-            print("see ya!")
+            print("\nInventory Manager Report\n")
+            print("----------------------------")  
+            manager.get_inventory_info()
+            manager.get_total_inventory_value()
+            
+            
+        elif option == "8":
+            print()
+            print("see ya! ;-)")
             break
+        
         else:
             print("Invalid choice, try again")
-               
-        
-              
-            # elif option == "7":
-        
-
             
-           
-        
 
 if __name__ == "__main__":
     main()
 
-
+               
+        
+              
+            
+        
 
 
 
