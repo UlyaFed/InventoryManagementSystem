@@ -34,5 +34,5 @@ def display_inventory():
 # Initial inventory setup - if the file doesn't exist yet, one will be created
 inventory = load_inventory()
 if not inventory:
-   inventory = {"Laptop": {"item_name": "Laptop", "price_per_unit": 1000, "quantity": 1, "total_price": 1000}}
+   inventory = {"laptop": {"item_name": "Laptop", "price_per_unit": 1000, "quantity": 1, "total_price": 1000}}
    save_inventory(inventory)  # Save initial inventory to JSON

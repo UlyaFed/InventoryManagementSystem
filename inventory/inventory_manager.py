@@ -2,6 +2,17 @@ from product import Product
 from inventory_dict import load_inventory, save_inventory, display_inventory #Britta
 
 class InventoryManager():
+    """ InventoryManager class shows a program for the manager to maintain
+    the inventory. 
+    The inventory file is saved for every change in our permanent json file.
+    Returns:
+        _type_: method 'product_in_inventory' returns a product, after name is given
+        _type_: method 'add_products' adds new products or changes quantity and price
+        _type_: method 'remove_products' removes complete items and list them temporarily
+        _type_: method 'update_inventory_quantity' increase or decrease a product's quantity
+        _type_: method 'get_total_inventory_value' shows the total value of all items in stock
+        _type_: method 'get_inventory_info' shows selcted key values and the inventory
+    """
     removed_products = []  # Empty list to track removed products from inventory
     
     def __init__(self, ):
@@ -69,7 +80,7 @@ class InventoryManager():
     def get_total_inventory_value(self):
         inventory = load_inventory()
         total_value = sum(product["total_price"] for product in inventory.values())
-        print(f"The total inventory value is {total_value:,.2f} EUR\n")  
+        print(f"\nThe total inventory value is {total_value:,.2f} EUR\n")  
         return total_value # returning the total value
     
     
@@ -79,15 +90,21 @@ class InventoryManager():
         # get amount of products in inventory
         total_len = len(inventory)
         # Find the most expensive product by price per unit
-        most_expensive_by_unit = max(inventory.items(), key=lambda x: x[1]['price_per_unit'])
+        most_expensive_by_unit = max(inventory.items(), key=lambda x: x[1]["price_per_unit"])
+        me_product = most_expensive_by_unit[0]
         # Find the most expensive product by total price
-        most_expensive_by_total_price = max(inventory.items(), key=lambda x: x[1]['total_price'])
+        most_expensive_by_total_price = max(inventory.items(), key=lambda x: x[1]["total_price"])
+        highest_value_product = most_expensive_by_total_price[0]       
         
         print(f"\nActually, we have ** {total_len} ** different products in stock. ")
         print( )
-        print(f"Most expensive item is:\n{ most_expensive_by_unit }")
+        print(f"Most expensive item is: {me_product}")
         print( )
-        print(f"Highest value per item in stock:\n{most_expensive_by_total_price  }\n\n")
+        print(f"Highest value per item in stock: {highest_value_product}\n\n")
+        print()
+        print(f"List of removed items:\n{self.deleted_items}\n\n")
+        
+        
         
         # Displaying the inventory in a readable and more beautiful format
         print("Overview inventory:\n")

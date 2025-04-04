@@ -16,7 +16,7 @@ def options_menu():
     print("*"*50)
     print( )
     print("You have the following options\n")
-    print("1. Get product info from inventory") #Britta
+    print("1. Get product info from inventory") 
     print("2. Add a product to the inventory")
     print("3. Remove an product from inventory")
     print("4. Change quantity of a product ") 
@@ -40,7 +40,7 @@ def main():
         options_menu()
 
         print("Choose an option: ")
-        option = input("Enter your option: ")
+        option = (input("Enter your option: ")).strip()
         
         
         if option == "1":
@@ -48,27 +48,27 @@ def main():
             manager.product_in_inventory(item_name)
         
             
-        if option == "2": 
+        elif option == "2": 
             print("\nAdd a product to the inventory\n")
-            item_name = input("Enter the product name: ")
+            item_name = input("Enter the product name: ").strip().lower()
             product_price = float(input("Enter the product price per unit: "))
             product_quantity = int(input("Enter the product quantity: "))
             #we are creating a new product object, not overwriting it like was before.
             new_product = Product(item_name, product_price, product_quantity)
-            product = new_product.get_product_info() # Britta
-            manager.add_products(product) #Britta
+            product = new_product.get_product_info() 
+            manager.add_products(product) 
 
             
         elif option == "3":
             print("\nRemove a product from inventory\n")
-            product_to_remove = input("Enter the product to remove: ")
+            product_to_remove = input("Enter the product to remove: ").strip().lower()
             manager.remove_products(product_to_remove) 
             print("\nList of {self.deleted_items} removed items:")  # Britta how we get the attribute?
             print(manager.removed_products) 
             
             
         elif option == "4": 
-            item_name = input("Enter the product name: ")
+            item_name = input("Enter the product name: ").strip().lower()
             qty_to_change = int(input("Enter the quantity to change (use negative for reduction): ")) # for an easier understanding of how to reduce the quantity
             manager.update_inventory_quantity(item_name, qty_to_change)
             
@@ -90,7 +90,7 @@ def main():
             
         elif option == "8":
             print()
-            print("see ya! ;-)")
+            print("see ya!\n\n")
             break
         
         else:
